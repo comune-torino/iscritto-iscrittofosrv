@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:cxf="http://cxf.apache.org/core"
+	   xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	   xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+						   http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+						   http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+						   http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+						   http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+
+	<!-- DOMANDA -->
+	<bean id="domandaSrvBean" class="it.csi.iscritto.iscrittofosrv.integration.service.domanda.DomandaSrvBean">
+        <property name="serviceInterface">
+            <bean factory-method="getPdProxy"
+                  class="it.csi.iscritto.iscrittofosrv.integration.service.PdProxySpring2Factory">
+                <constructor-arg value="classpath:@iscritto.serviscritto.domanda.pd.config@"></constructor-arg>
+                <constructor-arg value="it.csi.iscritto.serviscritto.interfacecsi.domanda.DomandaSrv"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+	<!-- LUOGHI -->
+	<bean id="luoghiSrvBean" class="it.csi.iscritto.iscrittofosrv.integration.service.luoghi.LuoghiSrvBean">
+        <property name="serviceInterface">
+            <bean factory-method="getPdProxy"
+                  class="it.csi.iscritto.iscrittofosrv.integration.service.PdProxySpring2Factory">
+                <constructor-arg value="classpath:@iscritto.serviscritto.luoghi.pd.config@"></constructor-arg>
+                <constructor-arg value="it.csi.iscritto.serviscritto.interfacecsi.luoghi.LuoghiSrv"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+	<!-- SCUOLE -->
+	<bean id="scuoleSrvBean" class="it.csi.iscritto.iscrittofosrv.integration.service.scuole.ScuoleSrvBean">
+        <property name="serviceInterface">
+            <bean factory-method="getPdProxy"
+                  class="it.csi.iscritto.iscrittofosrv.integration.service.PdProxySpring2Factory">
+                <constructor-arg value="classpath:@iscritto.serviscritto.scuole.pd.config@"></constructor-arg>
+                <constructor-arg value="it.csi.iscritto.serviscritto.interfacecsi.scuole.ScuoleSrv"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+	<!-- PROFILAZIONE -->
+	<bean id="profilazioneSrvBean" class="it.csi.iscritto.iscrittofosrv.integration.service.profilazione.ProfilazioneSrvBean">
+        <property name="serviceInterface">
+            <bean factory-method="getPdProxy"
+                  class="it.csi.iscritto.iscrittofosrv.integration.service.PdProxySpring2Factory">
+                <constructor-arg value="classpath:@iscritto.serviscritto.profilazione.pd.config@"></constructor-arg>
+                <constructor-arg value="it.csi.iscritto.serviscritto.interfacecsi.profilazione.ProfilazioneSrv"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+	<!-- NOTIFICATORE -->
+	<bean id="notificatoreServiceConfig" class="it.csi.iscritto.iscrittofosrv.integration.service.notificatore.config.NotificatoreServiceConfig">
+		<property name="preferencesUrl" value="@notificatore.ws.preferences.url@" />
+		<property name="preferencesToken" value="@notificatore.ws.preferences.tokenjwt@" />
+		<property name="messagebrokerUrl" value="@notificatore.ws.messagebroker.url@" />
+		<property name="messagebrokerToken" value="@notificatore.ws.messagebroker.tokenjwt@" />
+	</bean>
+
+	<!-- NAO -->
+	<bean id="srvVisuraFamiglia"
+		  class="it.csi.iscritto.iscrittofosrv.integration.service.nao.client.JavaServiceDesc"
+		  factory-bean="srvVisuraFamigliaFactory"
+		  factory-method="create"/>
+
+	<bean id="srvVisuraFamigliaFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="it.csi.iscritto.iscrittofosrv.integration.service.nao.client.JavaServiceDesc" />
+		<property name="address" value="@nao.ws.base.service.url@/@nao.ws.visura.famiglia.service.name@" />
+		<!--
+		<property name="inInterceptors">
+			<list>
+				<bean id="logIn" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+			</list>
+		</property>
+		<property name="outInterceptors">
+			<list>
+				<bean id="logOut" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+			</list>
+		</property>
+		-->
+	</bean>
+
+	<bean id="naoServiceConfig" class="it.csi.iscritto.iscrittofosrv.integration.service.nao.config.NaoServiceConfig">
+		<property name="codiceUtente" value="ISCRITTO" />
+	</bean>
+
+	<http:conduit name="@nao.ws.base.service.url@/.*">
+		<http:authorization>
+			<sec:UserName>@nao.ws.auth.user@</sec:UserName>
+			<sec:Password>@nao.ws.auth.password@</sec:Password>
+			<sec:AuthorizationType>Basic</sec:AuthorizationType>
+		</http:authorization>
+	</http:conduit>
+</beans>

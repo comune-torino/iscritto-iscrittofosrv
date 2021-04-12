@@ -1,0 +1,1571 @@
+---
+swagger: "2.0"
+info:
+  description: TBD
+  version: 1.0.0
+  title: Domanda Iscrizione
+  termsOfService: TBD
+  contact:
+    email: standard@csi.it
+  license:
+    name: TBD
+    url: 'http://www.csi.it'
+host: dev-jbiscritto01.csi.it:35610
+basePath: /iscrittofosrvRest/iscritto
+schemes:
+  - http
+  - https
+securityDefinitions:
+  basicAuth:
+    type: basic
+# To apply Basic auth to the whole API:
+security:
+  - basicAuth: []
+paths:
+  /allegati/{idDomanda}/{idAllegato}/{cfRichiedente}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "downloadAllegato"
+      produces:
+      - "application/octet-stream"
+      parameters:
+      - name: "idDomanda"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "idAllegato"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "cfRichiedente"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Allegato"
+    delete:
+      summary: ""
+      description: ""
+      operationId: "deleteAllegato"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idDomanda"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "idAllegato"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "cfRichiedente"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "integer"
+            format: "int32"
+  /allegati/multipart/{idDomanda}/{cfRichiedente}:
+    post:
+      operationId: "uploadMultipart"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idDomanda"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "cfRichiedente"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/MultipartFormDataInput"
+      responses:
+        default:
+          description: "successful operation"
+  /allegati/{idDomanda}/{idSoggetto}/{codTipologia}/{cfRichiedente}:
+    post:
+      summary: ""
+      description: ""
+      operationId: "uploadAllegato"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idDomanda"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "idSoggetto"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "codTipologia"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "cfRichiedente"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/MultipartFormDataInput"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "integer"
+              format: "int64"
+  /anagrafica/dettaglio-famiglia/{cf}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getDettaglioFamiglia"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cf"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DettaglioFamiglia"
+  /comuni/attivi:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoComuniAttivi"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comune"
+  /comuni/attivi/istat-provincia/{istatProvincia}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoComuniAttiviByProvincia"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "istatProvincia"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comune"
+  /comuni/attivi-alla-data/{data}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoComuniAttiviAllaData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comune"
+  /comuni/attivi-alla-data/{data}/istat-provincia/{istatProvincia}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoComuniAttiviAllaDataByProvincia"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "istatProvincia"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comune"
+  /province/attive:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoProvinceAttive"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Provincia"
+  /province/attive-alla-data/{data}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoProvinceAttiveAllaData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Provincia"
+  /province/attive-alla-data/{data}/istat-regione/{istatRegione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoProvinceAttiveAllaDataByIstatRegione"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "istatRegione"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Provincia"
+  /province/attive/istat-regione/{istatRegione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoProvinceAttiveByIstatRegione"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "istatRegione"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Provincia"
+  /regioni/attive-alla-data/{data}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoRegioniAttiveAllaData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Regione"
+  /regioni/attive:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoRegioniAttive"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Regione"
+  /stati/attivi-alla-data/{data}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoStatiAttiviAllaData"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "data"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Stato"
+  /stati/attivi:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoStatiAttivi"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Stato"
+  /nidi/domande/{idDomandaIscrizione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "read"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idDomandaIscrizione"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DomandaNido"
+    delete:
+      summary: ""
+      description: ""
+      operationId: "delete"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idDomandaIscrizione"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        default:
+          description: "successful operation"
+  /nidi/domande/richiedente/{codiceFiscale}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoDomandeByCfRichiedente"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "codiceFiscale"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoDomanda"
+  /nidi/domande/verifica/richiedente/{cfRichiedente}/minore/{cfMinore}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "verificaDomanda"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cfRichiedente"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "cfMinore"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+  /nidi/domande:
+    post:
+      summary: ""
+      description: ""
+      operationId: "saveBozza"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/DomandaNido"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DomandaNido"
+  /nidi/domande/inviata/{idDomandaIscrizione}:
+    post:
+      summary: ""
+      description: ""
+      operationId: "invioDomanda"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idDomandaIscrizione"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+  /profilazione/privilegi/inserimento/{cfOperatore}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "checkPrivilegioInserimento"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cfOperatore"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "boolean"
+  /scuole/nidi/descrizione/{descrizione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoNidiByDescrizione"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "descrizione"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/materne/anno/{anno}/indirizzo/{indirizzo}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoMaterneByIndirizzo"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "anno"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "indirizzo"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/nidi/indirizzo/{indirizzo}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoNidiByIndirizzo"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "indirizzo"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/materne/anno/{anno}/descrizione/{descrizione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoMaterneByDescrizione"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "anno"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "descrizione"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/materne/anno/{anno}/circoscrizione/{circoscrizione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoMaterneByCircoscrizione"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "anno"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "circoscrizione"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/nidi/circoscrizione/{circoscrizione}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoNidiByCircoscrizione"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "circoscrizione"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/nidi:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoNidi"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /scuole/materne/anno/{anno}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getElencoMaterne"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "anno"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "dataNascita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/InfoScuola"
+  /utente/info:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getInfoUtente"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "identita"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/InfoUtente"
+  /controlli/codice-fiscale/{cf}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "validaCodiceFiscale"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cf"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "integer"
+            format: "int32"
+  /controlli/giorni-lavorati:
+    post:
+      summary: ""
+      description: ""
+      operationId: "getGiorniLavorati"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GiorniLavoratiFilter"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "integer"
+            format: "int32"
+definitions:
+  Allegato:
+    type: "object"
+    properties:
+      idAllegato:
+        type: "integer"
+        format: "int64"
+      documento:
+        type: "array"
+        items:
+          type: "string"
+          format: "byte"
+      protocollo:
+        type: "string"
+      idAnagraficaSoggetto:
+        type: "integer"
+        format: "int64"
+      codTipoAllegato:
+        type: "string"
+      dataInserimento:
+        type: "string"
+        format: "date-time"
+      nomeFile:
+        type: "string"
+      mimeType:
+        type: "string"
+  InputPart:
+    type: "object"
+    properties:
+      headers:
+        type: "object"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      contentTypeFromMessage:
+        type: "boolean"
+      mediaType:
+        $ref: "#/definitions/MediaType"
+      bodyAsString:
+        type: "string"
+  MediaType:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      subtype:
+        type: "string"
+      parameters:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      wildcardSubtype:
+        type: "boolean"
+      wildcardType:
+        type: "boolean"
+  MultipartFormDataInput:
+    type: "object"
+    properties:
+      formDataMap:
+        type: "object"
+        additionalProperties:
+          type: "array"
+          items:
+            $ref: "#/definitions/InputPart"
+      formData:
+        type: "object"
+        additionalProperties:
+          $ref: "#/definitions/InputPart"
+      parts:
+        type: "array"
+        items:
+          $ref: "#/definitions/InputPart"
+      preamble:
+        type: "string"
+  AnagraficaComponente:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+      cognome:
+        type: "string"
+      codiceFiscale:
+        type: "string"
+      dataNascita:
+        type: "string"
+      oraMinutiNascita:
+        type: "string"
+      sesso:
+        type: "string"
+  ComponenteFamiglia:
+    type: "object"
+    properties:
+      anagrafica:
+        $ref: "#/definitions/AnagraficaComponente"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascitaComponente"
+      iscrizioneNido:
+        type: "boolean"
+      iscrizioneMaterna:
+        type: "boolean"
+      numeroIndividuale:
+        type: "string"
+      anni:
+        type: "integer"
+        format: "int32"
+      richiedente:
+        type: "boolean"
+      coniugeRichiedente:
+        type: "boolean"
+      numeroIndividualeConiuge:
+        type: "string"
+  DettaglioFamiglia:
+    type: "object"
+    properties:
+      richiedente:
+        $ref: "#/definitions/ComponenteFamiglia"
+      coniuge:
+        $ref: "#/definitions/ComponenteFamiglia"
+      maggiorenni:
+        type: "array"
+        items:
+          $ref: "#/definitions/ComponenteFamiglia"
+      minorenni:
+        type: "array"
+        items:
+          $ref: "#/definitions/ComponenteFamiglia"
+      residenzaFamiglia:
+        $ref: "#/definitions/ResidenzaFamiglia"
+  LuogoNascitaComponente:
+    type: "object"
+    properties:
+      codNazione:
+        type: "string"
+      descNazione:
+        type: "string"
+      codRegione:
+        type: "string"
+      descRegione:
+        type: "string"
+      codProvincia:
+        type: "string"
+      descProvincia:
+        type: "string"
+      codComune:
+        type: "string"
+      descComune:
+        type: "string"
+  ResidenzaFamiglia:
+    type: "object"
+    properties:
+      codNazione:
+        type: "string"
+      descNazione:
+        type: "string"
+      codRegione:
+        type: "string"
+      descRegione:
+        type: "string"
+      codProvincia:
+        type: "string"
+      descProvincia:
+        type: "string"
+      codComune:
+        type: "string"
+      descComune:
+        type: "string"
+      cap:
+        type: "integer"
+        format: "int32"
+      indirizzo:
+        type: "string"
+      idCircoscrizione:
+        type: "integer"
+        format: "int32"
+      descCircoscrizione:
+        type: "string"
+  Comune:
+    type: "object"
+    properties:
+      codice:
+        type: "string"
+      descrizione:
+        type: "string"
+  Provincia:
+    type: "object"
+    properties:
+      codice:
+        type: "string"
+      descrizione:
+        type: "string"
+  Regione:
+    type: "object"
+    properties:
+      codice:
+        type: "string"
+      descrizione:
+        type: "string"
+  Stato:
+    type: "object"
+    properties:
+      codice:
+        type: "string"
+      descrizione:
+        type: "string"
+  Affido:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      soggetti:
+        type: "array"
+        items:
+          $ref: "#/definitions/SoggettoAffido"
+  AltriComponenti:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      soggetti:
+        type: "array"
+        items:
+          $ref: "#/definitions/SoggettoAltroComponente"
+  Anagrafica:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+      cognome:
+        type: "string"
+      codiceFiscale:
+        type: "string"
+      dataNascita:
+        type: "string"
+      oraMinutiNascita:
+        type: "string"
+      sesso:
+        type: "string"
+  Autonomo:
+    type: "object"
+    properties:
+      piva:
+        type: "string"
+      comune:
+        type: "string"
+      provincia:
+        type: "string"
+      indirizzo:
+        type: "string"
+  ComponentiNucleo:
+    type: "object"
+    properties:
+      soggetti:
+        type: "array"
+        items:
+          $ref: "#/definitions/SoggettoNucleo"
+  CondizioneOccupazionale:
+    type: "object"
+    properties:
+      stato:
+        type: "string"
+      dati:
+        $ref: "#/definitions/DatiCondizioneOccupazionale"
+  DatiCiDisoccupato:
+    type: "object"
+    properties:
+      comune:
+        type: "string"
+      provincia:
+        type: "string"
+  DatiCondizioneOccupazionale:
+    type: "object"
+    properties:
+      dipendente:
+        $ref: "#/definitions/Dipendente"
+      autonomo:
+        $ref: "#/definitions/Autonomo"
+      disoccupato:
+        $ref: "#/definitions/Disoccupato"
+      nonOccupato:
+        type: "array"
+        items:
+          $ref: "#/definitions/NonOccupato"
+      studente:
+        $ref: "#/definitions/Studente"
+  DatiIsee:
+    type: "object"
+    properties:
+      valore:
+        type: "number"
+        format: "double"
+      dataAttestazione:
+        type: "string"
+  DatiServiziSociali:
+    type: "object"
+    properties:
+      assistente:
+        type: "string"
+      nome:
+        type: "string"
+      indirizzo:
+        type: "string"
+      telefono:
+        type: "string"
+  DatiSoggetto3:
+    type: "object"
+    properties:
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+  DatiSpostamento:
+    type: "object"
+    properties:
+      stato:
+        type: "string"
+      dataVariazione:
+        type: "string"
+      dataAppuntamento:
+        type: "string"
+      residenzaFutura:
+        type: "string"
+      indirizzo:
+        type: "string"
+  DatiTrasferimento:
+    type: "object"
+    properties:
+      data:
+        type: "string"
+      indirizzoVecchio:
+        type: "string"
+      indirizzoNuovo:
+        type: "string"
+      indirizzoNido:
+        type: "string"
+      dataDal:
+        type: "string"
+      dataAl:
+        type: "string"
+  Dipendente:
+    type: "object"
+    properties:
+      azienda:
+        type: "string"
+      comune:
+        type: "string"
+      provincia:
+        type: "string"
+      indirizzo:
+        type: "string"
+  Disabilita:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      documenti:
+        type: "array"
+        items:
+          $ref: "#/definitions/Documento"
+  Disoccupato:
+    type: "object"
+    properties:
+      dataDichiarazione:
+        type: "string"
+      soggettoDichiarazione:
+        type: "string"
+      datiCi:
+        $ref: "#/definitions/DatiCiDisoccupato"
+  Documento:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      eliminato:
+        type: "boolean"
+      file:
+        $ref: "#/definitions/File"
+  DomandaNido:
+    type: "object"
+    properties:
+      idDomandaIscrizione:
+        type: "integer"
+        format: "int64"
+      statoDomanda:
+        type: "string"
+      ordineScuola:
+        type: "string"
+      responsabilitaGenitoriale:
+        type: "boolean"
+      infoAutocertificazione:
+        type: "boolean"
+      infoGdpr:
+        type: "boolean"
+      nao:
+        type: "boolean"
+      codiceFiscaleOperatore:
+        type: "string"
+      richiedente:
+        $ref: "#/definitions/Richiedente"
+      minore:
+        $ref: "#/definitions/Minore"
+      soggetto1:
+        $ref: "#/definitions/Soggetto1"
+      soggetto2:
+        $ref: "#/definitions/Soggetto2"
+      soggetto3:
+        $ref: "#/definitions/Soggetto3"
+      componentiNucleo:
+        $ref: "#/definitions/ComponentiNucleo"
+      altriComponenti:
+        $ref: "#/definitions/AltriComponenti"
+      affido:
+        $ref: "#/definitions/Affido"
+      isee:
+        $ref: "#/definitions/Isee"
+      elencoNidi:
+        type: "array"
+        items:
+          $ref: "#/definitions/Nido"
+  File:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      type:
+        type: "string"
+  FratelloFrequentante:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      tipo:
+        type: "string"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+  GenitoreSolo:
+    type: "object"
+    properties:
+      stato:
+        type: "string"
+      sentenza:
+        $ref: "#/definitions/Sentenza"
+  Gravidanza:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      documenti:
+        type: "array"
+        items:
+          $ref: "#/definitions/Documento"
+  Isee:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      dati:
+        $ref: "#/definitions/DatiIsee"
+  LuogoNascita:
+    type: "object"
+    properties:
+      codNazione:
+        type: "string"
+      descNazione:
+        type: "string"
+      codRegione:
+        type: "string"
+      descRegione:
+        type: "string"
+      codProvincia:
+        type: "string"
+      descProvincia:
+        type: "string"
+      codComune:
+        type: "string"
+      descComune:
+        type: "string"
+  Minore:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      presenzaNucleo:
+        type: "boolean"
+      residenzaConRichiedente:
+        type: "boolean"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+      disabilita:
+        $ref: "#/definitions/Disabilita"
+      serviziSociali:
+        $ref: "#/definitions/ServiziSociali"
+      problemiSalute:
+        $ref: "#/definitions/ProblemiSalute"
+      fratelloFrequentante:
+        $ref: "#/definitions/FratelloFrequentante"
+      trasferimento:
+        $ref: "#/definitions/Trasferimento"
+      spostamento:
+        $ref: "#/definitions/Spostamento"
+  Nido:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      codCircoscrizione:
+        type: "string"
+      codScuola:
+        type: "string"
+      descrizione:
+        type: "string"
+      indirizzo:
+        type: "string"
+      codTipoFrequenza:
+        type: "string"
+      codCategoriaScuola:
+        type: "string"
+  NonOccupato:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      azienda:
+        type: "string"
+      comune:
+        type: "string"
+      indirizzo:
+        type: "string"
+      dataInizio:
+        type: "string"
+      dataFine:
+        type: "string"
+  ProblemiSalute:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      documenti:
+        type: "array"
+        items:
+          $ref: "#/definitions/Documento"
+  Residenza:
+    type: "object"
+    properties:
+      codNazione:
+        type: "string"
+      descNazione:
+        type: "string"
+      codRegione:
+        type: "string"
+      descRegione:
+        type: "string"
+      codProvincia:
+        type: "string"
+      descProvincia:
+        type: "string"
+      codComune:
+        type: "string"
+      descComune:
+        type: "string"
+      cap:
+        type: "string"
+      indirizzo:
+        type: "string"
+  Richiedente:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      email:
+        type: "string"
+      telefono:
+        type: "string"
+      residenzaFutura:
+        type: "string"
+      recapitoNoResidenza:
+        type: "string"
+      relazioneConMinore:
+        type: "string"
+      condizioneCoabitazione:
+        type: "string"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+  Sentenza:
+    type: "object"
+    properties:
+      numero:
+        type: "string"
+      data:
+        type: "string"
+      tribunale:
+        type: "string"
+  ServiziSociali:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      dati:
+        $ref: "#/definitions/DatiServiziSociali"
+  Soggetto1:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+      gravidanza:
+        $ref: "#/definitions/Gravidanza"
+      problemiSalute:
+        $ref: "#/definitions/ProblemiSalute"
+      condizioneOccupazionale:
+        $ref: "#/definitions/CondizioneOccupazionale"
+      genitoreSolo:
+        $ref: "#/definitions/GenitoreSolo"
+  Soggetto2:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      presenzaNucleo:
+        type: "boolean"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+      gravidanza:
+        $ref: "#/definitions/Gravidanza"
+      problemiSalute:
+        $ref: "#/definitions/ProblemiSalute"
+      condizioneOccupazionale:
+        $ref: "#/definitions/CondizioneOccupazionale"
+  Soggetto3:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      dati:
+        $ref: "#/definitions/DatiSoggetto3"
+  SoggettoAffido:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      relazioneConMinore:
+        type: "string"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+      sentenza:
+        $ref: "#/definitions/Sentenza"
+      problemiSalute:
+        $ref: "#/definitions/ProblemiSalute"
+  SoggettoAltroComponente:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      relazioneConMinore:
+        type: "string"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      residenza:
+        $ref: "#/definitions/Residenza"
+      problemiSalute:
+        $ref: "#/definitions/ProblemiSalute"
+  SoggettoNucleo:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      relazioneConMinore:
+        type: "string"
+      anagrafica:
+        $ref: "#/definitions/Anagrafica"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascita"
+      problemiSalute:
+        $ref: "#/definitions/ProblemiSalute"
+  Spostamento:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      dati:
+        $ref: "#/definitions/DatiSpostamento"
+  Studente:
+    type: "object"
+    properties:
+      istituto:
+        type: "string"
+      corso:
+        type: "string"
+  Trasferimento:
+    type: "object"
+    properties:
+      stato:
+        type: "boolean"
+      dati:
+        $ref: "#/definitions/DatiTrasferimento"
+  InfoDomanda:
+    type: "object"
+    properties:
+      idDomandaIscrizione:
+        type: "integer"
+        format: "int64"
+      protocollo:
+        type: "string"
+      nome:
+        type: "string"
+      cognome:
+        type: "string"
+      statoDomanda:
+        type: "string"
+      annoScolastico:
+        type: "string"
+  InfoScuola:
+    type: "object"
+    properties:
+      codScuola:
+        type: "string"
+      descrizione:
+        type: "string"
+      indirizzo:
+        type: "string"
+      codCategoriaScuola:
+        type: "string"
+      descCategoriaScuola:
+        type: "string"
+      codOrdineScuola:
+        type: "string"
+      descOrdineScuola:
+        type: "string"
+      codCircoscrizione:
+        type: "string"
+      descCircoscrizione:
+        type: "string"
+      annoScolastico:
+        type: "string"
+      alert:
+        type: "boolean"
+      tempoBreve:
+        type: "boolean"
+      tempoLungo:
+        type: "boolean"
+      tempoIntermedio:
+        type: "boolean"
+  InfoUtente:
+    type: "object"
+    properties:
+      userId:
+        type: "string"
+      sms:
+        type: "string"
+      email:
+        type: "string"
+      serviceName:
+        type: "string"
+      channels:
+        type: "array"
+        items:
+          type: "string"
+  GiorniLavoratiFilter:
+    type: "object"
+    properties:
+      periodi:
+        type: "array"
+        items:
+          $ref: "#/definitions/InfoPeriodo"
+  InfoPeriodo:
+    type: "object"
+    properties:
+      dataInizio:
+        type: "string"
+      dataFine:
+        type: "string"
+responses:
+  UnauthorizedError:
+    description: Authentication information is missing or invalid
+    headers:
+      WWW_Authenticate:
+        type: string

@@ -1,0 +1,17 @@
+{
+"java8": false,
+"useBeanValidation": true,
+"hideGenerationTimestamp": true,
+"apiPackage": "it.csi.iscritto.iscrittofosrv.business.domanda",
+"modelPackage":  "it.csi.iscritto.iscrittofosrv.dto.domanda",
+"invokerPackage": "it.csi.iscritto.iscrittofosrv.business.domanda",
+"implFolder": "implfolder",
+"sourceFolder": "src/java",
+"useSwaggerFeature": false,
+"generateJbossDeploymentDescriptor": false,
+"generateImplArtifacts": true,
+"generateSwaggerMetadata": false,
+"attributeSerializationStrategy": "explicit-as-modeled",
+"accessHttpHeaders": true,
+"serializableModel" : true
+}

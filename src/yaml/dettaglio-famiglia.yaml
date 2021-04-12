@@ -1,0 +1,145 @@
+---
+swagger: "2.0"
+paths:
+  /anagrafica/dettaglio-famiglia/{cf}:
+    get:
+      summary: ""
+      description: ""
+      operationId: "getDettaglioFamiglia"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cf"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/InfoNao"
+definitions:
+  AnagraficaComponente:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+      cognome:
+        type: "string"
+      codiceFiscale:
+        type: "string"
+      dataNascita:
+        type: "string"
+      oraMinutiNascita:
+        type: "string"
+      sesso:
+        type: "string"
+  ComponenteFamiglia:
+    type: "object"
+    properties:
+      anagrafica:
+        $ref: "#/definitions/AnagraficaComponente"
+      luogoNascita:
+        $ref: "#/definitions/LuogoNascitaComponente"
+      iscrizioneNido:
+        type: "boolean"
+      iscrizioneMaterna:
+        type: "array"
+        items:
+          type: "string"
+      numeroIndividuale:
+        type: "string"
+      anni:
+        type: "integer"
+        format: "int32"
+      richiedente:
+        type: "boolean"
+      coniugeRichiedente:
+        type: "boolean"
+      numeroIndividualeConiuge:
+        type: "string"
+  DettaglioFamiglia:
+    type: "object"
+    properties:
+      richiedente:
+        $ref: "#/definitions/ComponenteFamiglia"
+      coniuge:
+        $ref: "#/definitions/ComponenteFamiglia"
+      maggiorenni:
+        type: "array"
+        items:
+          $ref: "#/definitions/ComponenteFamiglia"
+      minorenni:
+        type: "array"
+        items:
+          $ref: "#/definitions/ComponenteFamiglia"
+      residenzaFamiglia:
+        $ref: "#/definitions/ResidenzaFamiglia"
+  InfoNao:
+    type: "object"
+    properties:
+      dettaglioFamiglia:
+        $ref: "#/definitions/DettaglioFamiglia"
+      annoLimiteNido:
+        type: "integer"
+        format: "int32"
+      anniScolasticiMaterna:
+        type: "object"
+        additionalProperties:
+          $ref: "#/definitions/PropertyAnnoLimite"
+      erroreNao:
+        type: "boolean"
+  LuogoNascitaComponente:
+    type: "object"
+    properties:
+      codNazione:
+        type: "string"
+      descNazione:
+        type: "string"
+      codRegione:
+        type: "string"
+      descRegione:
+        type: "string"
+      codProvincia:
+        type: "string"
+      descProvincia:
+        type: "string"
+      codComune:
+        type: "string"
+      descComune:
+        type: "string"
+  PropertyAnnoLimite:
+    type: "object"
+    properties:
+      annoLimite:
+        type: "integer"
+        format: "int32"
+  ResidenzaFamiglia:
+    type: "object"
+    properties:
+      codNazione:
+        type: "string"
+      descNazione:
+        type: "string"
+      codRegione:
+        type: "string"
+      descRegione:
+        type: "string"
+      codProvincia:
+        type: "string"
+      descProvincia:
+        type: "string"
+      codComune:
+        type: "string"
+      descComune:
+        type: "string"
+      cap:
+        type: "integer"
+        format: "int32"
+      indirizzo:
+        type: "string"
+      idCircoscrizione:
+        type: "integer"
+        format: "int32"
+      descCircoscrizione:
+        type: "string"
