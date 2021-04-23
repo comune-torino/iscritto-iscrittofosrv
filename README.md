@@ -2,7 +2,7 @@
 ISCRITTO-ISCRITTOFOSRV
 
 # Project Description
-Questa componente espone servizi REST di back-end per il front-end (iscrittofe) di gestione domanda di iscrizione ai nidi e materne
+Questa componente espone servizi REST di back-end per il front-end (iscrittofe) di gestione domanda di iscrizione ai nidi/scuole dell'infanzia
 
 # Configurations
 Aprire il file buildfiles/dev-rp-01.properties e configurare i seguenti parametri:
